@@ -82,8 +82,7 @@ public class ConferenceApi {
         // userId, displayName, mainEmail and teeShirtSize
         Profile profile = new Profile(userId, displayName, mainEmail, teeShirtSize);
 
-        // TODO 3 (In Lesson 3)
-        // Save the Profile entity in the datastore
+        ofy().save().entity(profile).now();
 
         // Return the profile
         return profile;
@@ -105,11 +104,9 @@ public class ConferenceApi {
             throw new UnauthorizedException("Authorization required");
         }
 
-        // TODO
-        // load the Profile Entity
-        String userId = ""; // TODO
-        Key key = null; // TODO
-        Profile profile = null; // TODO load the Profile entity
+        Key<Profile> key = Key.create(Profile.class, user.getUserId()); 
+        Profile profile = ofy().load().key(key).now();
+
         return profile;
     }
 }
