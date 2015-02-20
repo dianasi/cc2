@@ -57,31 +57,38 @@ public class ConferenceApi {
     		throw new UnauthorizedException("USER NOT FOUND");
     	}
     	
-        String userId = user.getUserId();
-        String mainEmail = user.getEmail();
-        String displayName = "Your name will go here";
+    	String displayName = null;
         TeeShirtSize teeShirtSize = TeeShirtSize.NOT_SPECIFIED;
-
-       
+    	
+    	Profile profile = getProfile(user);
+    	if(profile == null) {
+    		profile = new Profile(user.getUserId(), displayName, user.getEmail(), teeShirtSize);
+    	} else {
+    		displayName = profile.getDisplayName();
+    		teeShirtSize = profile.getTeeShirtSize();
+    	}
+    	
+    	
         
-        teeShirtSize = form.getTeeShirtSize();
-        // Set the teeShirtSize to the value sent by the ProfileForm, if sent
-        // otherwise leave it as the default value
-
-       
-        displayName = form.getDisplayName();
-
-        
-
-        if(displayName != null && displayName.length() > 0)
-        {
-        	displayName = extractDefaultDisplayNameFromEmail(mainEmail);
+        if(form.getTeeShirtSize() != null) {
+        	teeShirtSize = form.getTeeShirtSize();
         }
+        
+         
+        
+        if(form.getDisplayName() != null)
+        	displayName = form.getDisplayName();
+        
+        if(displayName == null) {
+        	displayName = extractDefaultDisplayNameFromEmail(user.getEmail());
+        }
+
+        
        
         // Create a new Profile entity from the
         // userId, displayName, mainEmail and teeShirtSize
-        Profile profile = new Profile(userId, displayName, mainEmail, teeShirtSize);
-
+        profile.update(displayName, teeShirtSize);
+        
         ofy().save().entity(profile).now();
 
         // Return the profile

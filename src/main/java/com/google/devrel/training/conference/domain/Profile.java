@@ -28,6 +28,11 @@ public class Profile {
     	this.teeShirtSize = teeShirtSize;
     }
     
+    public void update(String displayName, TeeShirtSize teeShirtSize) {
+    	this.displayName = displayName;
+    	this.teeShirtSize = teeShirtSize;
+    }
+    
 	public String getDisplayName() {
 		return displayName;
 	}
