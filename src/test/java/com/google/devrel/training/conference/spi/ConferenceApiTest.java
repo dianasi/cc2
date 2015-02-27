@@ -266,7 +266,7 @@ public class ConferenceApiTest {
     }
     
 
-    /*
+    
     @Test
     public void testRegistrations() throws Exception {
         DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
@@ -292,14 +292,14 @@ public class ConferenceApiTest {
                 profile.getConferenceKeysToAttend().contains(conference.getWebsafeKey()));
 
         // Unregister
-        result = conferenceApi.unregisterFromConference(
-                user, conference.getWebsafeKey()).getResult();
-        conference = conferenceApi.getConference(conference.getWebsafeKey());
-        profile = ofy().load().key(Key.create(Profile.class, user.getUserId())).now();
-        assertTrue("unregisterFromConference should succeed.", result);
-        assertEquals(CAP, conference.getSeatsAvailable());
-        assertFalse("Profile shouldn't have the conferenceId in conferenceIdsToAttend.",
-                profile.getConferenceKeysToAttend().contains(conference.getWebsafeKey()));
+//        result = conferenceApi.unregisterFromConference(
+//                user, conference.getWebsafeKey()).getResult();
+//        conference = conferenceApi.getConference(conference.getWebsafeKey());
+//        profile = ofy().load().key(Key.create(Profile.class, user.getUserId())).now();
+//        assertTrue("unregisterFromConference should succeed.", result);
+//        assertEquals(CAP, conference.getSeatsAvailable());
+//        assertFalse("Profile shouldn't have the conferenceId in conferenceIdsToAttend.",
+//                profile.getConferenceKeysToAttend().contains(conference.getWebsafeKey()));
     }
-    */
+    
 }

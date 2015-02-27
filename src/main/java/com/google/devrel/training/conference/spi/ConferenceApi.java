@@ -284,7 +284,7 @@ public class ConferenceApi {
 			httpMethod = HttpMethod.POST
 			)
 
-	public WrappedBoolean registerForConference_SKELETON(final User user,
+	public WrappedBoolean registerForConference(final User user,
 			@Named("websafeConferenceKey") final String websafeConferenceKey)
 					throws UnauthorizedException, NotFoundException,
 					ForbiddenException, ConflictException {
@@ -305,7 +305,7 @@ public class ConferenceApi {
 
 					// Get the conference key -- you can get it from websafeConferenceKey
 					// Will throw ForbiddenException if the key cannot be created
-					Key<Conference> conferenceKey =  Key.create(Conference.class, websafeConferenceKey);
+					Key<Conference> conferenceKey =  Key.create(websafeConferenceKey);
 
 					
 					// Get the Conference entity from the datastore
