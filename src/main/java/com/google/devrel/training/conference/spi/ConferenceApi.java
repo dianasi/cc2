@@ -17,6 +17,9 @@ import com.google.api.server.spi.response.ConflictException;
 import com.google.api.server.spi.response.ForbiddenException;
 import com.google.api.server.spi.response.NotFoundException;
 import com.google.api.server.spi.response.UnauthorizedException;
+import com.google.appengine.api.taskqueue.Queue;
+import com.google.appengine.api.taskqueue.QueueFactory;
+import com.google.appengine.api.taskqueue.TaskOptions;
 import com.google.appengine.api.users.User;
 import com.google.devrel.training.conference.Constants;
 import com.google.devrel.training.conference.domain.Conference;
@@ -202,6 +205,12 @@ public class ConferenceApi {
 		ofy().save().entity(conference).now();
 
 
+		Queue queue = QueueFactory.getQueue("email-queue");
+		queue.add(TaskOptions.Builder.withUrl("/crons/send_email")
+				.param("email", profile.getMainEmail())
+				.param("conferenceInfo", conference.getName()));
+
+		
 		return conference;
 	}
 
